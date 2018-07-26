@@ -10,10 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 //import org.assertj.core.util.Arrays;
 //import org.assertj.core.util.Arrays;
@@ -30,8 +28,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import chop.sanic.dao.SearchIndexDao;
 
@@ -92,10 +88,6 @@ public class SanicApplicationTests {
 
     @Test
     public void searchStuffWorks() throws Exception {
-    	
-    	String[] chars = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r",
-    			"s","t","u","v","w","x","y","z"}; 
-    	
     	mockMvc.perform(post("/src-index/person").
     			content(personSchema).contentType(MediaType.APPLICATION_JSON_UTF8));
     	String refFirstName = "bilbo";
@@ -122,73 +114,23 @@ public class SanicApplicationTests {
     	
     	firstNames.clear();
     	lastNames.clear();
-    	/*for ( int eDist = 1 ; eDist <= 2 ; eDist ++ ) {
-    		for ( int fl = 3 ; fl < refFirstName.length() ; fl ++ ) {
-				String firstName = refFirstName;
-				for ( int i = 0 ; i < eDist ; i ++ ) {
-					int cn = (int) Math.floor(Math.random() * chars.length);
-    				firstName = firstName.substring(0, fl) 
-    						+ chars[cn] 
-    						+ firstName.substring(fl, firstName.length());
-    			}
-				firstNames.add(firstName);
-    			
-    		}
-    		for ( int ll = 3 ; ll < refLastName.length() ; ll ++ ) {
-				String lastName = refLastName;
-				for ( int i = 0 ; i < eDist ; i ++ ) {
-					int cn = (int) Math.floor(Math.random() * chars.length);
-    				lastName = lastName.substring(0, ll) 
-    						+ chars[cn] 
-    						+ lastName.substring(ll, lastName.length());
-    			}
-				lastNames.add(lastName);
-    		}
-    	}*/
-    	
-    	
     	firstNames = new ArrayList<>(Arrays.asList("bilbo", "balbo", 
     			"bulbo", "bilbbo", "bilbu", "balba", "bbilbo", "billbo",
     			"bbylbba", "balboa"));
     	lastNames = new ArrayList<>(Arrays.asList("baggins", "buggins", "boggins",
     			"bagins", "buhgins", "bagginz", "bagginch", "bagginski", "boginsk"));
     	
-    	/*ObjectMapper mapper = new ObjectMapper();
-    	int totalCount = 0;
-    	int hitCount = 0;*/
+
     	for ( String firstName : firstNames ) {
     		for ( String lastName : lastNames ) {
-    			//System.out.println(firstName + " - " + lastName);
-    			//totalCount ++;
     			mockMvc.perform(get("/search/person").param("query", firstName + " " + lastName))
     			.andExpect(status().isOk())
     			.andExpect(jsonPath("$").isArray())
     			.andExpect(jsonPath("$[0].document.firstName").value(refFirstName))
     			.andExpect(jsonPath("$[0].document.lastName").value(refLastName));
-    			/*.andReturn().getResponse().getContentAsString();
     			
-    			JsonNode resultNode = mapper.readValue(result, JsonNode.class);
-    			if ( resultNode.has(0)) {
-    				String fNameResult = resultNode.get(0).get("document").get("firstName").asText();
-    				String lNameResult = resultNode.get(0).get("document").get("lastName").asText();
-			
-    				if ( fNameResult.equals(refFirstName) && lNameResult.equals(refLastName)) {
-    					hitCount ++;
-    				}
-    			}
-    			else {
-    				System.out.println("lname : "+lastName);
-    				System.out.println("first name : "+firstName);
-    			}*/
-    			
-    			
-    			/*.andExpect(jsonPath("$[0].document.firstName").value(refFirstName))
-    			.andExpect(jsonPath("$[0].document.lastName").value(refLastName));
-    			//.andDo(print());*/
     		}
     	}
-    	/*System.out.println("total : "+totalCount);
-    	System.out.println("hits : "+hitCount);*/
     	
     	 redisConnectionFactory.getConnection().flushDb();
     }
@@ -205,13 +147,6 @@ public class SanicApplicationTests {
     			content(content).contentType(MediaType.APPLICATION_JSON_UTF8))
     		.andExpect(status().isOk());
     }
-    
-	
-	
-	/*@Test
-	public void contextLoads() {
-	}*/
-	
-	
+ 
 
 }
