@@ -1,0 +1,142 @@
+body{
+	margin: 0;
+	background-color: #00C3B9;
+	font-family: monospace;
+}
+#search-header {
+	display: block;
+	width: 95vw;
+	text-align: center;
+	margin-bottom: 2em;
+	background-color: #FFBCD2;
+	padding: 1em 0 1em 0;
+	color: #3A2874;
+	font-family: monospace;
+	margin-top: 0.5em;
+	margin-left: 2.5vw;
+	box-shadow: 5px 10px 6px #222;
+}
+
+
+
+#search-param-form {
+	background-color: #FFBCD2;
+	width: 80vw;
+	margin-left: 10vw;
+	padding: 1em 0 1em 0;
+	display: flex;
+	flex-flow: column;
+	/* flex-grow: 50%; */
+	justify-items: center;
+	align-items: center;
+	font-family: monospace;
+	color: #3A2874;
+	box-shadow: 5px 6px 8px #444;
+	/* justify-content: space-evenly; */
+}
+
+div{
+	width: 100%;
+	
+}
+
+#index-name-input {
+	width: 33%;
+	margin: 0 5% 0 5%;
+	background-color: #FFBCD2;
+	color: #3A2874;
+	text-align: center;
+	border: solid 1px;
+	font-style: italic;
+	font-family: monospace;
+	border-radius: 3px;
+}
+#index-name-input:hover{
+	border: solid 2px;
+}
+#src-row {
+	display: flex;
+	flex-flow: row;
+	justify-items: center;
+}
+.button {
+	width: 75px;
+	background-color: #00C3B9;
+	padding: 0.5em;
+	font-weight: bold;
+	text-align: center;
+	box-shadow: 1px 1px 2px black;
+}
+.button:hover {
+	/* background-color: red; */
+	cursor: pointer;
+	box-shadow: 2px 2px 2px black;
+}
+#index-name-display {
+	width: 33%;
+	text-align: center;
+}
+
+#search-form{
+	margin-top: 1em;
+	display: flex;
+	flex-flow: row;
+	justify-items: center;
+	background-color: #FFBCD2;
+	width: 80vw;
+	margin-left: 10vw;
+	padding: 1em 0 1em 0;
+	color: #3A2874;
+	box-shadow: 5px 6px 8px #444;
+}
+
+#search-input{
+	width: 77%;
+	margin: 0 5% 0 5%;
+	background-color: #FFBCD2;
+	color: #3A2874;
+	text-align: center;
+	border: solid 1px;
+	font-style: italic;
+	font-family: monospace;
+	border-radius: 3px;
+}
+#search-input:hover{
+	border: solid 2px;
+}
+
+.result-block{
+	
+	background-color: #FFBCD2;
+	width: 80vw;
+	margin-left: 10vw;
+	padding: 1em 0 1em 0;
+	color: #3A2874;
+	box-shadow: 5px 6px 8px #444;
+	margin-top: 1.5em;
+}
+.result-header{
+	font-weight: bold;
+}
+.result-block ul {
+	width: 50%;
+	margin-left: 25%;
+	list-style: none;
+}
+
+.result-block ul li:first-of-type {
+	display: unset;
+}
+
+.result-block li{
+	display: none;	
+}
+.expanded li{
+	display: block;
+	
+}
+
+.result-block:hover {
+	cursor: pointer;
+	box-shadow: 10px 12px 8px #444;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Search</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div id=searchblock>
+    	
+    	<div id="search-header">
+    		<h2>Test your search index</h2>
+    	</div>
+    	<div id="search-param-form">
+    		<div id="src-row"><input type="text" id="index-name-input" value="gutenberg"/> <div class="button" id="index-name-button">change</div><div id="index-name-display">gutenberg</div></div>
+    		
+    	</div>
+    	<div id="search-form">
+    		<input type="text" id="search-input" value="balzac"/> <div class="button" id="src-button">go</div>
+    	</div>
+    	<div id="search-result">
+    		<div class="result-block">
+    			<ul>
+    				<li><span class="result-header">Title</span> : <span class="result-value">Le Horla</span></li>
+    				<li><span class="result-header">Auteur</span> : <span class="result-value">Guy de Maupassant</span></li>
+    				<li><span class="result-header">Links</span> : 
+    					<ul>
+    						<li><span class="result-value">ayyy</span></li>
+    						<li><span class="result-value">ayyy</span></li>
+    						<li><span class="result-value">ayyy</span></li>
+    					</ul>
+    				</li>
+    			</ul>    			    			
+    		</div>
+    		<div class="result-block expanded">
+    			<ul>
+    				<li><span class="result-header">Title</span> : <span class="result-value">Le Horla</span></li>
+    				<li><span class="result-header">Auteur</span> : <span class="result-value">Guy de Maupassant</span></li>
+    				<li><span class="result-header">Links</span> : 
+    					<ul>
+    						<li><span class="result-value">ayyy</span></li>
+    						<li><span class="result-value">ayyy</span></li>
+    						<li><span class="result-value">ayyy</span></li>
+    					</ul>
+    				</li>
+    			</ul>    			    			
+    		</div>
+    		<div class="result-block">
+    			<ul>
+    				<li><span class="result-header">Title</span> : <span class="result-value">Le Horla</span></li>
+    				<li><span class="result-header">Auteur</span> : <span class="result-value">Guy de Maupassant</span></li>
+    				<li><span class="result-header">Links</span> : 
+    					<ul>
+    						<li><span class="result-value">ayyy</span></li>
+    						<li><span class="result-value">ayyy</span></li>
+    						<li><span class="result-value">ayyy</span></li>
+    					</ul>
+    				</li>
+    			</ul>    			    			
+    		</div>
+    	</div>
+    </div>
+    
+    <template  id="result-template">
+ 			<div class="result-block">
+ 			<ul>
+ 				<li><span class="result-header">Title</span> : <span class="result-value"></span></li>
+ 				<li><span class="result-header">Author</span> : <span class="result-value"></span></li>
+ 				<li><span class="result-header">Link</span> : <span class="result-value"></span></li>
+ 				<!-- <li><span class="result-header">Links</span> : 
+ 					<ul>
+ 						<li><span class="result-value">ayyy</span></li>
+ 						<li><span class="result-value">ayyy</span></li>
+ 						<li><span class="result-value">ayyy</span></li>
+ 					</ul>
+ 				</li>-->
+ 			</ul>
+ 			</div>    			    			
+ 		</template>
+  </body>
+</html>
