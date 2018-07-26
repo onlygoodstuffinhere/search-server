@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import chop.sanic.model.IndexedDocument;
 import chop.sanic.model.ScoredDocument;
 import chop.sanic.model.SearchIndex;
 import chop.sanic.services.SearchIndexService;
@@ -54,8 +55,8 @@ public class Controler {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "src-index/document/{name}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public void index(@PathVariable String name, @RequestBody JsonNode object) {
-		this.searchIndexService.index(name, object);
+	public @ResponseBody String index(@PathVariable String name, @RequestBody JsonNode object) {
+		return this.searchIndexService.index(name, object);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value= "search/{name}")
@@ -63,5 +64,15 @@ public class Controler {
 		return this.searchService.search(name, query);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value="src-index/document/{name}")
+	public @ResponseBody IndexedDocument getSingle (@PathVariable String name, @RequestParam String id) {
+		return this.searchIndexService.getSingle(name, id);
+	}
+	
+	@RequestMapping ( method = RequestMethod.DELETE , value = "src-index/document/{name}")
+	@ResponseStatus(value = HttpStatus.OK)
+	public void deleteSingle (@PathVariable String name, @RequestParam String id ) {
+		this.searchIndexService.deleteSingle(name, id);
+	}
 	
 }

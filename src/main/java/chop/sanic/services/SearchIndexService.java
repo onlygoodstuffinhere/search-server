@@ -29,6 +29,7 @@ import chop.sanic.dao.DocumentRedisDao;
 import chop.sanic.dao.SearchIndexDao;
 import chop.sanic.model.IndexedDocument;
 import chop.sanic.model.SearchIndex;
+import chop.sanic.services.exceptions.DocumentNotFound;
 import chop.sanic.services.exceptions.IndexAlreadyExists;
 
 @Service
@@ -117,7 +118,7 @@ public class SearchIndexService {
 	}
 	
 	@StateImpacting
-	public void index(String name, JsonNode node ) {
+	public String index(String name, JsonNode node ) {
 		SearchIndex sIndex = this.searchIndexDao.findById(name).get();
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -135,6 +136,7 @@ public class SearchIndexService {
 				IndexedDocument document = new IndexedDocument(id, documentType,
 															indexedFieldsValues, fullDocument);
 				this.documentDao.indexDocument(document);
+				return id;
 			}
 			else {
 				throw new RuntimeException("invalid data");
@@ -146,6 +148,21 @@ public class SearchIndexService {
 			throw new RuntimeException("Error occured parsing json",e);
 		}
 		//
+	}
+	
+	public IndexedDocument getSingle ( String indexName, String docId ) {
+		IndexedDocument result = this.documentDao.getSingle(indexName, docId);
+		if ( result == null ){
+			throw new DocumentNotFound(indexName, docId);
+		}
+		return result;
+	}
+	
+	public void deleteSingle ( String indexName, String docId ) {
+		boolean deleted = this.documentDao.deleteSingle(indexName, docId);
+		if ( !deleted ) {
+			throw new DocumentNotFound(indexName, docId);
+		}
 	}
 	
 	private Map<String, String> getIndexedValues ( JsonNode node, List<String> fields){

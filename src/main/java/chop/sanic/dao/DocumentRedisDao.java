@@ -94,5 +94,34 @@ public class DocumentRedisDao {
 		}
 		return finalResult;
 	}
+	
+	public IndexedDocument getSingle ( String documentType, String id ) {
+		return this.hashOperations.get(FULL_DOCUMENT + "." + documentType, id);
+	}
+	
+	public boolean deleteSingle (String documentType, String id ) {
+		if ( this.hashOperations.get(FULL_DOCUMENT + "." + documentType, id) != null ) {
+			IndexedDocument document = this.hashOperations.get(FULL_DOCUMENT + "." + documentType, id);
+			this.hashOperations.delete(FULL_DOCUMENT + "." + documentType, id);
+			
+			logger.debug("DISINDEX DOCUMENT type: "+documentType+" id: "+id);
+			Map<String,String> indexedFields = document.getIndexedAttributes();
+			for ( Entry<String, String> field : indexedFields.entrySet() ) {
+				String attributeName =  field.getKey();
+				String attributeValue = field.getValue();
+				Set<String> keys = IndexUtils.toIndexable(attributeValue);
+				for ( String key : keys ) {
+					this.setOperations.remove(SEARCH + "." + document.getDocumentType() 
+					+ "." + attributeName + "." + key, document.getId());
+				}
+			}
+			return true;
+			
+		}
+		else {
+			return false;
+			
+		}
+	}
 
 }

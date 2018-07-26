@@ -110,7 +110,7 @@ public class SanicApplicationTests {
     		}
     	}
     	
-    	indexPerson(refLastName, refFirstName);
+    	String refId = indexPerson(refLastName, refFirstName);
     	
     	firstNames.clear();
     	lastNames.clear();
@@ -132,20 +132,31 @@ public class SanicApplicationTests {
     		}
     	}
     	
+    	mockMvc.perform(get("/src-index/document/person").param("id", refId))
+    	.andExpect(status().isOk())
+    	.andExpect(jsonPath("$.indexedAttributes.firstName").value(refFirstName))
+    	.andExpect(jsonPath("$.indexedAttributes.lastName").value(refLastName));
+    	
+    	mockMvc.perform(delete("/src-index/document/person").param("id", refId))
+    	.andExpect(status().isOk());
+    	
+    	mockMvc.perform(get("/src-index/document/person").param("id", refId))
+    	.andExpect(status().isNotFound());
+    	
     	 redisConnectionFactory.getConnection().flushDb();
     }
     
     
-    private void indexPerson (String lName, String fName ) throws Exception {
+    private String indexPerson (String lName, String fName ) throws Exception {
     	String content = "{\"firstName\": \"";
 		content += fName;
 		content += "\", \"lastName\": \"";
 		content += lName;
 		content += "\"}";
-		//System.out.println(content);
-		mockMvc.perform(post("/src-index/document/person").
+		return mockMvc.perform(post("/src-index/document/person").
     			content(content).contentType(MediaType.APPLICATION_JSON_UTF8))
-    		.andExpect(status().isOk());
+    		.andExpect(status().isOk())
+    		.andReturn().getResponse().getContentAsString();
     }
  
 
